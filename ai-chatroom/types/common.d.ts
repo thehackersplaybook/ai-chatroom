@@ -11,4 +11,10 @@ export declare class Common {
      * @returns {boolean} True if the source is a valid URL, false otherwise.
      */
     static isUrl(source: string): boolean;
+    /**
+     * Checks if the given source string is alphanumeric.
+     * @param source - The source string to check.
+     * @returns True if the source is alphanumeric, false otherwise.
+     */
+    static isAlphaNumeric(source: string): boolean;
 }
