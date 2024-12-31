@@ -17,4 +17,10 @@ export declare class Common {
      * @returns True if the source is alphanumeric, false otherwise.
      */
     static isAlphaNumeric(source: string): boolean;
+    /**
+     * Checks if the given name is valid.
+     * @param name Name of the entity
+     * @returns boolean if the name is valid
+     */
+    static isValidName(name: string): boolean;
 }
