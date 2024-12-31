@@ -29,4 +29,14 @@ export class Common {
     const alphaNumericRegex = /^[a-zA-Z0-9 ]*$/;
     return alphaNumericRegex.test(source);
   }
+
+  /**
+   * Checks if the given name is valid.
+   * @param name Name of the entity
+   * @returns boolean if the name is valid
+   */
+  static isValidName(name: string): boolean {
+    const alphaNumericRegexWithDots = /^[a-zA-Z0-9. ]*$/;
+    return Boolean(name && name.trim()) && alphaNumericRegexWithDots.test(name);
+  }
 }
