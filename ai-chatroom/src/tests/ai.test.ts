@@ -8,8 +8,7 @@ describe("AI", () => {
   let model: LanguageModel;
 
   beforeEach(async () => {
-    model = await AI.getModel("openai:gpt-4o");
-    ai = new AI(model);
+    ai = await AI.getInstance("openai:gpt-4o");
 
     vi.spyOn(ai, "generateText").mockResolvedValue({
       text: "Hello, world!",
@@ -47,5 +46,11 @@ describe("AI", () => {
       }),
     });
     expect(object).toBeDefined();
+  });
+
+  it("should return an instance of the AI class", async () => {
+    const ai = await AI.getInstance("openai:gpt-4o");
+    expect(ai).toBeInstanceOf(AI);
+    expect(ai).toBeDefined();
   });
 });
