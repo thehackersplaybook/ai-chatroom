@@ -1,0 +1,57 @@
+{
+  "name": "ai-chatroom",
+  "version": "1.0.0",
+  "description": "AI Chatroom is your ticket to a vibrant, dynamic, and ever-curious virtual conversation space. 💬",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "bin": {
+    "mia": "./dist/bin.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest --testTimeout 30000",
+    "test:coverage": "vitest --testTimeout 30000 --coverage",
+    "start": "npm run build && node dist/bin.js",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "types",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "ai",
+    "llm",
+    "genai",
+    "simulation",
+    "conversational-ai",
+    "chatbot",
+    "chatroom",
+    "chat",
+    "conversation",
+    "virtual-conversation",
+    "virtual-chat",
+    "virtual-chatroom",
+    "virtual-chatbot"
+  ],
+  "author": "Aditya Patange <contact.adityapatange@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@ai-sdk/anthropic": "^1.0.6",
+    "@ai-sdk/openai": "^1.0.11",
+    "ai": "^4.0.22",
+    "axios": "^1.7.9",
+    "chalk": "^4.0.0",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2",
+    "uuid": "^11.0.3",
+    "vitest": "^2.1.8",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^2.1.8"
+  }
+}
