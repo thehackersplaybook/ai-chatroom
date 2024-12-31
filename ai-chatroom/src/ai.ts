@@ -41,13 +41,14 @@ interface GenerateObjectOptions {
  * AI class provides methods to generate text and objects using a specified language model.
  */
 export class AI {
+  private static instance: AI | null = null;
   private model: LanguageModel;
 
   /**
    * Constructs an instance of the AI class.
    * @param model - The language model to use.
    */
-  constructor(model: LanguageModel) {
+  private constructor(model: LanguageModel) {
     this.model = model;
   }
 
@@ -94,5 +95,18 @@ export class AI {
       console.error(error);
       throw new Error(`AI: model ${modelName} not found`);
     }
+  }
+
+  /**
+   * Initializes an instance of the AI class with the specified model.
+   * @param modelName The name of the model to instantiate the AI client with.
+   * @returns AI instance
+   */
+  public static async getInstance(modelName: string): Promise<AI> {
+    if (!AI.instance) {
+      const model = await AI.getModel(modelName);
+      AI.instance = new AI(model);
+    }
+    return AI.instance;
   }
 }
