@@ -6,9 +6,11 @@
  */
 
 import { v4 as uuid } from "uuid";
-import { Persona } from "./models";
+import { ChatMessage, Persona } from "./models";
 import { AI } from "./ai";
 import { AgentValidator } from "./agent-validator";
+import { z } from "zod";
+import { ChatDriver } from "./chat-driver";
 
 interface AgentInitOptions {
   name: string;
@@ -59,7 +61,7 @@ export class Agent {
    * Returns the name of the agent.
    * @returns The name of the agent.
    */
-  getName(): string {
+  public getName(): string {
     return this.name;
   }
 
@@ -67,7 +69,7 @@ export class Agent {
    * Returns the ID of the agent.
    * @returns The ID of the agent.
    */
-  getId(): string {
+  public getId(): string {
     return this.id;
   }
 
@@ -75,9 +77,43 @@ export class Agent {
    * Returns the persona of the agent.
    * @returns persona of the agent
    */
-  getPersona(): Persona {
+  public getPersona(): Persona {
     return {
       ...this.persona,
     };
+  }
+
+  /**
+   * Processes the message and generates a response.
+   * @param message The message to process
+   * @returns The response to the message
+   */
+  public async processMessage(
+    message: ChatMessage
+  ): Promise<ChatMessage | null> {
+    try {
+      await this.initAI();
+
+      const ai = this.ai as AI;
+
+      const { object }: any = await ai.generateObject({
+        system: "You are an AI chat agent, given a message, reply to it.",
+        prompt: message.message,
+        schema: z.object({
+          message: z.string(),
+        }),
+      });
+
+      const response = ChatDriver.buildChatMessage(
+        message.chatroomId,
+        object.message,
+        this.id
+      );
+
+      return response;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
 }

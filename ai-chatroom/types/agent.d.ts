@@ -4,7 +4,7 @@
  * Description: Agent class for the AI Chatroom tool.
  * ✨ "We win because we choose." — Anonymous
  */
-import { Persona } from "./models";
+import { ChatMessage, Persona } from "./models";
 interface AgentInitOptions {
     name: string;
     persona: Persona;
@@ -45,5 +45,11 @@ export declare class Agent {
      * @returns persona of the agent
      */
     getPersona(): Persona;
+    /**
+     * Processes the message and generates a response.
+     * @param message The message to process
+     * @returns The response to the message
+     */
+    processMessage(message: ChatMessage): Promise<ChatMessage | null>;
 }
 export {};

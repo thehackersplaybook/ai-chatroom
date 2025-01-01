@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "vitest --testTimeout 30000",
+    "test": "vitest --testTimeout 30000 --silent",
     "test:coverage": "vitest --testTimeout 30000 --coverage",
     "start": "npm run build && node dist/bin.js",
     "prepublishOnly": "npm run build"

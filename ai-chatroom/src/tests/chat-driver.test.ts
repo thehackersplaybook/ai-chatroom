@@ -1,6 +1,5 @@
 import { describe, expect, beforeEach, afterEach, it, vi } from "vitest";
 import { ChatDriver } from "../chat-driver";
-import { Observable } from "rxjs";
 
 describe("Chat Driver", () => {
   beforeEach(() => {
@@ -11,18 +10,12 @@ describe("Chat Driver", () => {
     vi.resetAllMocks();
   });
 
-
-  it("returns an observable for chat messages", () => {
-    const driver = new ChatDriver();
-    const messagesObservable = driver.getMessagesObservable();
-    expect(messagesObservable).toBeDefined();
-    expect(messagesObservable.subscribe).toBeDefined();
-    expect(messagesObservable).toBeInstanceOf(Observable);
-  });
-
   it("builds a chat message object", () => {
-    const driver = new ChatDriver();
-    const chatMessage = driver.buildChatMessage("chatroom1", "Hello", "user1");
+    const chatMessage = ChatDriver.buildChatMessage(
+      "chatroom1",
+      "Hello",
+      "user1"
+    );
     expect(chatMessage).toBeDefined();
     expect(chatMessage.id).toBeDefined();
     expect(chatMessage.chatroomId).toBe("chatroom1");
@@ -31,4 +24,16 @@ describe("Chat Driver", () => {
     expect(chatMessage.timestamp).toBeDefined();
   });
 
+  it("sends a message to the chatroom", () => {
+    const driver = new ChatDriver();
+    const mockHandler = vi.fn();
+    driver.addOnMessageHandler(mockHandler);
+    const message = ChatDriver.buildChatMessage("chatroom1", "Hello", "user1");
+
+    driver.sendMessage(message);
+
+    expect(driver.getHistory().length).toBe(1);
+    expect(driver.getHistory()[0]).toBe(message);
+    expect(mockHandler).toHaveBeenCalledWith(message);
+  });
 });

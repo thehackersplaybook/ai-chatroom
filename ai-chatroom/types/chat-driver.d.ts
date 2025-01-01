@@ -1,10 +1,3 @@
-/**
- * Filename: chat-driver.ts
- * Author: Aditya Patange (AdiPat)
- * Description: Driver for chat messages in the AI Chatroom tool.
- * ✨ "We don't ask, we enquire." – Anonymous
- */
-import { Observable } from "rxjs";
 import { ChatMessage } from "./models";
 /**
  * ChatDriver class provides methods to orchestrate the chat messages in the chatroom.
@@ -12,11 +5,6 @@ import { ChatMessage } from "./models";
 export declare class ChatDriver {
     private messages;
     private history;
-    /**
-     * Returns the observable for chat messages
-     * @returns Observable<ChatMessage> - The observable for chat messages
-     */
-    getMessagesObservable(): Observable<ChatMessage>;
     /**
      * Sends a message to the chatroom
      * @param message - The message to send
@@ -34,5 +22,10 @@ export declare class ChatDriver {
      * @param sender The sender ID of the chat message
      * @returns ChatMessage The chat message object
      */
-    buildChatMessage(chatroomId: string, message: string, sender: string): ChatMessage;
+    static buildChatMessage(chatroomId: string, message: string, sender: string): ChatMessage;
+    /**
+     * Attaches a handler function to be called when a message is received
+     * @param handler Handler function to be called when a message is received
+     */
+    addOnMessageHandler(handler: (message: ChatMessage) => Promise<void>): void;
 }

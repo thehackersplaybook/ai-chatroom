@@ -8,18 +8,27 @@
 import { v4 as uuid } from "uuid";
 import { Common } from "./common";
 import { ChatDriver } from "./chat-driver";
+import { Agent } from "./agent";
 
+type Agents = {
+  [agentId: string]: Agent;
+};
+
+export interface ChatroomInitOptions {
+  name: string;
+}
 
 export class Chatroom {
   private name: string;
   private id: string;
   private chatDriver: ChatDriver = new ChatDriver();
+  private agents: Agents = {};
 
   /**
    * @description Chatroom class constructor
    * @param {string} name - The name of the chatroom
    */
-  constructor({ name }: { name: string }) {
+  constructor({ name }: ChatroomInitOptions) {
     this.validateName(name);
     this.id = uuid();
     this.name = name;
@@ -57,5 +66,46 @@ export class Chatroom {
    */
   getId(): string {
     return this.id;
+  }
+
+  /**
+   * Checks if the agent exists in the chatroom
+   * @param agent The agent to check for existence
+   * @returns true if the agent exists in the chatroom
+   */
+  public agentExists(agent: Agent): boolean {
+    return Boolean(this.agents[agent.getId()]);
+  }
+
+  /**
+   * Returns the chat driver instance associated with the chatroom
+   * @returns ChatDriver The chat driver instance associated with the chatroom
+   */
+  public getChatDriver(): ChatDriver {
+    return this.chatDriver;
+  }
+
+  /**
+   * Adds an agent to the chatroom
+   * @param agent Agent to be added to the chatroom
+   * @returns void
+   */
+  public async addAgent(agent: Agent): Promise<void> {
+    if (this.agentExists(agent)) {
+      throw new Error("Agent already exists in the chatroom. ");
+    }
+
+    const agentId = agent.getId();
+    this.agents[agentId] = agent;
+
+    this.chatDriver.addOnMessageHandler(async (message) => {
+      if (message.chatroomId === this.id && message.sender !== agentId) {
+        const response = await agent.processMessage(message);
+
+        if (response) {
+          this.chatDriver.sendMessage(response);
+        }
+      }
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { describe, expect, beforeEach, afterEach, it, vi } from "vitest";
 import { Agent } from "../agent";
 import { Persona } from "../models";
+import { AI } from "../ai";
 
 describe("Agent", () => {
   const descriptionAbove256Chars = "A".repeat(257);
@@ -86,4 +87,68 @@ describe("Agent", () => {
       expect(() => new Agent({ name: "", persona })).toThrowError(errorMessage);
     }
   );
+
+  it("processes a chat message", async () => {
+    const getInstanceSpy = vi.spyOn(AI, "getInstance");
+
+    getInstanceSpy.mockImplementation(async (): Promise<any> => {
+      return {
+        generateObject: async () => {
+          return {
+            object: {
+              message: "Hello, how can I help you?",
+            },
+          };
+        },
+      };
+    });
+
+    const persona: Persona = {
+      key: "sample_persona",
+      name: "Mr. Sample",
+      description: "This is a sample persona for testing. ",
+    };
+    const agent = new Agent({ name: "AI Agent", persona });
+    const chatMessage = {
+      id: "1",
+      chatroomId: "chatroom1",
+      sender: "user1",
+      message: "Hello",
+      timestamp: new Date().getTime(),
+    };
+    const response = await agent.processMessage(chatMessage);
+    expect(response).toBeDefined();
+    expect(response?.id).toBeDefined();
+    expect(response?.chatroomId).toBe(chatMessage.chatroomId);
+    expect(response?.sender).toBe(agent.getId());
+    expect(response?.timestamp).toBeDefined();
+  });
+
+  it("returns null if there's a failure to process chat message", async () => {
+    const getInstanceSpy = vi.spyOn(AI, "getInstance");
+
+    getInstanceSpy.mockImplementation(async (): Promise<any> => {
+      return {
+        generateObject: async () => {
+          throw new Error("AI error");
+        },
+      };
+    });
+
+    const persona: Persona = {
+      key: "sample_persona",
+      name: "Mr. Sample",
+      description: "This is a sample persona for testing. ",
+    };
+    const agent = new Agent({ name: "AI Agent", persona });
+    const chatMessage = {
+      id: "1",
+      chatroomId: "chatroom1",
+      sender: "user1",
+      message: "Hello",
+      timestamp: new Date().getTime(),
+    };
+    const response = await agent.processMessage(chatMessage);
+    expect(response).toBeNull();
+  });
 });
