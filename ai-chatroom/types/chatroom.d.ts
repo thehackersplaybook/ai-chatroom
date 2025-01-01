@@ -7,6 +7,7 @@
 export declare class Chatroom {
     private name;
     private id;
+    private chatDriver;
     /**
      * @description Chatroom class constructor
      * @param {string} name - The name of the chatroom
