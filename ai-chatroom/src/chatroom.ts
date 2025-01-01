@@ -7,10 +7,13 @@
 
 import { v4 as uuid } from "uuid";
 import { Common } from "./common";
+import { ChatDriver } from "./chat-driver";
+
 
 export class Chatroom {
   private name: string;
   private id: string;
+  private chatDriver: ChatDriver = new ChatDriver();
 
   /**
    * @description Chatroom class constructor
