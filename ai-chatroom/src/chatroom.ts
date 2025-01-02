@@ -1,14 +1,20 @@
 /**
- * Filename: chatroom.ts
- * Author: Aditya Patange (AdiPat)
- * Description: Chatroom class for the AI Chatroom tool.
+ *
+ * @file chatroom.ts
+ * @author Aditya Patange (AdiPat) <contact.adityapatange@gmail.com>
+ * @description 🚀 Chatroom where the agents interact
+ * @date December 2024
+ * @version 1.0.0
+ * @license Affero General Public License v3.0
  * ✨ "The only way to do great work is to love what you do." – Steve Jobs
+ *
  */
 
 import { v4 as uuid } from "uuid";
 import { Common } from "./common";
 import { ChatDriver } from "./chat-driver";
 import { Agent } from "./agent";
+import { ChatMessage } from "./models";
 
 type Agents = {
   [agentId: string]: Agent;
@@ -18,6 +24,9 @@ export interface ChatroomInitOptions {
   name: string;
 }
 
+/**
+ * Chatroom where the agents interact
+ */
 export class Chatroom {
   private name: string;
   private id: string;
@@ -98,14 +107,16 @@ export class Chatroom {
     const agentId = agent.getId();
     this.agents[agentId] = agent;
 
-    this.chatDriver.addOnMessageHandler(async (message) => {
+    const handler = async (message: ChatMessage) => {
       if (message.chatroomId === this.id && message.sender !== agentId) {
         const response = await agent.processMessage(message);
 
         if (response) {
-          this.chatDriver.sendMessage(response);
+          await this.chatDriver.sendMessage(response);
         }
       }
-    });
+    };
+
+    this.chatDriver.addOnMessageHandler(handler.bind(this));
   }
 }
