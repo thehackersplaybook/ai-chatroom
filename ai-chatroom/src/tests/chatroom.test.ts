@@ -113,7 +113,7 @@ describe("chatroom", () => {
         "Hello",
         agent.getId()
       );
-      chatDriver.sendMessage(message);
+      await chatDriver.sendMessage(message);
       expect(processMessageSpy).toHaveBeenCalledTimes(0);
       expect(sendMessageSpy).toHaveBeenCalledTimes(1);
     });
@@ -137,7 +137,7 @@ describe("chatroom", () => {
       const sendMessageSpy = vi.spyOn(chatDriver, "sendMessage");
 
       await chatroom.addAgent(agent);
-      chatDriver.sendMessage(message);
+      await chatDriver.sendMessage(message);
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       expect(processMessageSpy).toHaveBeenCalledTimes(1);
@@ -158,7 +158,7 @@ describe("chatroom", () => {
       );
 
       await chatroom.addAgent(agent);
-      chatDriver.sendMessage(message);
+      await chatDriver.sendMessage(message);
 
       expect(processMessageSpy).toHaveBeenCalledTimes(1);
       expect(sendMessageSpy).toHaveBeenCalledTimes(1);

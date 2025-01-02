@@ -37,12 +37,12 @@ describe("Chat Driver", () => {
   });
 
   describe("send message", () => {
-    it("sends a message to the chatroom", () => {
+    it("sends a message to the chatroom", async () => {
       const driver = new ChatDriver();
       const mockHandler = vi.fn();
       driver.addOnMessageHandler(mockHandler);
 
-      driver.sendMessage(standardChatMessage);
+      await driver.sendMessage(standardChatMessage);
 
       const expectedHistory = driver.getHistory();
 
@@ -59,17 +59,47 @@ describe("Chat Driver", () => {
       expect(expectedHistory.length).toBe(0);
     });
 
-    it("returns chat history when multiple messages are sent", () => {
+    it("returns chat history when multiple messages are sent", async () => {
       const message2 = ChatDriver.buildChatMessage(
         "chatroom1",
         "Hello",
         "user2"
       );
       const driver = new ChatDriver();
-      driver.sendMessage(standardChatMessage);
-      driver.sendMessage(message2);
+      await driver.sendMessage(standardChatMessage);
+      await driver.sendMessage(message2);
       const expectedHistory = driver.getHistory();
       expect(expectedHistory).toEqual([standardChatMessage, message2]);
+    });
+  });
+
+  describe("terminate chat", () => {
+    it("doesn't allow send message after chat is terminated", async () => {
+      const driver = new ChatDriver();
+      const mockHandler = vi.fn();
+      driver.addOnMessageHandler(mockHandler);
+
+      await driver.sendMessage(standardChatMessage);
+      driver.terminateChat();
+
+      const failingMessage = ChatDriver.buildChatMessage(
+        "chatroom1",
+        "Hello",
+        "user1"
+      );
+      const sendPromise = driver.sendMessage(failingMessage);
+      await expect(sendPromise).rejects.toThrowError(
+        "Chat has been terminated"
+      );
+    });
+
+    it("doesn't allow adding message handler after chat is terminated", async () => {
+      const driver = new ChatDriver();
+      const mockHandler = vi.fn();
+      driver.terminateChat();
+
+      const addHandler = () => driver.addOnMessageHandler(mockHandler);
+      expect(addHandler).toThrowError("Chat has been terminated");
     });
   });
 });

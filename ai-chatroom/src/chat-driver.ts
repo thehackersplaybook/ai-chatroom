@@ -19,12 +19,18 @@ import { v4 as uuid } from "uuid";
 export class ChatDriver {
   private messages: Subject<ChatMessage> = new Subject();
   private history: ChatMessage[] = [];
+  private isChatTerminated: boolean = false;
+  private chatTerminatedErrorMesssage: string = "Chat has been terminated";
 
   /**
    * Sends a message to the chatroom
    * @param message - The message to send
    */
-  public sendMessage(message: ChatMessage): void {
+  public async sendMessage(message: ChatMessage): Promise<void> {
+    if (this.isChatTerminated) {
+      throw new Error(this.chatTerminatedErrorMesssage);
+    }
+
     this.messages.next(message);
     this.history.push(message);
   }
@@ -65,6 +71,15 @@ export class ChatDriver {
   public addOnMessageHandler(
     handler: (message: ChatMessage) => Promise<void>
   ): void {
+    if (this.isChatTerminated) {
+      throw new Error(this.chatTerminatedErrorMesssage);
+    }
+
     this.messages.subscribe(handler);
+  }
+
+  public terminateChat(): void {
+    this.isChatTerminated = true;
+    this.messages.complete();
   }
 }

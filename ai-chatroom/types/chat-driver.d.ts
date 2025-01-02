@@ -5,11 +5,13 @@ import { ChatMessage } from "./models";
 export declare class ChatDriver {
     private messages;
     private history;
+    private isChatTerminated;
+    private chatTerminatedErrorMesssage;
     /**
      * Sends a message to the chatroom
      * @param message - The message to send
      */
-    sendMessage(message: ChatMessage): void;
+    sendMessage(message: ChatMessage): Promise<void>;
     /**
      * Returns the chat history
      * @returns ChatMessage[] - The chat history
@@ -28,4 +30,5 @@ export declare class ChatDriver {
      * @param handler Handler function to be called when a message is received
      */
     addOnMessageHandler(handler: (message: ChatMessage) => Promise<void>): void;
+    terminateChat(): void;
 }
