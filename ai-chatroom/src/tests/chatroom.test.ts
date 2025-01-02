@@ -24,10 +24,15 @@ describe("chatroom", () => {
   });
 
   describe("initialization", () => {
-    it("should create a new chatroom with name and id", () => {
+    it("should create a new chatroom with name id", () => {
       const chatroom = new Chatroom({ name: standardChatroomName });
       expect(chatroom.getName()).toBe(standardChatroomName);
       expect(chatroom.getId()).toBeDefined();
+    });
+
+    it("should create a new chatroom with empty description", () => {
+      const chatroom = new Chatroom({ name: standardChatroomName });
+      expect(chatroom.getDescription()).toBe("");
     });
 
     it.each(["", "  "])(
@@ -157,6 +162,15 @@ describe("chatroom", () => {
 
       expect(processMessageSpy).toHaveBeenCalledTimes(1);
       expect(sendMessageSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe("set description", () => {
+    it("sets the description of the chatroom", () => {
+      const chatroom = new Chatroom({ name: "AI Chatroom" });
+      const description = "This is a test chatroom";
+      chatroom.setDescription(description);
+      expect(chatroom.getDescription()).toBe(description);
     });
   });
 });

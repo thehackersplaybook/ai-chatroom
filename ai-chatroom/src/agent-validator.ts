@@ -35,9 +35,7 @@ export class AgentValidator {
    * @throws Error if the name is invalid
    */
   private validateName(name: string): void {
-    if (!Common.isValidName(name)) {
-      throw new Error("Invalid agent name");
-    }
+    return Common.validateNameWithError(name, "Invalid agent name");
   }
 
   /**

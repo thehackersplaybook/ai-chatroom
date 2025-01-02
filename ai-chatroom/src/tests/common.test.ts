@@ -58,4 +58,13 @@ describe("common", () => {
       }
     );
   });
+
+  describe("generate random name", () => {
+    it("should generate a random name", () => {
+      const minLength = 8;
+      const name = Common.generateRandomName();
+      expect(name).toBeDefined();
+      expect(name.length).toBeGreaterThan(minLength);
+    });
+  });
 });

@@ -18,8 +18,9 @@ export interface ChatroomInitOptions {
  * Chatroom where the agents interact
  */
 export declare class Chatroom {
-    private name;
     private id;
+    private name;
+    private description;
     private chatDriver;
     private agents;
     /**
@@ -55,6 +56,17 @@ export declare class Chatroom {
      * @returns ChatDriver The chat driver instance associated with the chatroom
      */
     getChatDriver(): ChatDriver;
+    /**
+     * Returns the description of the chatroom
+     * @returns {string} The description of the chatroom
+     */
+    getDescription(): string;
+    /**
+     * Sets the description of the chatroom
+     * @param description The description of the chatroom
+     * @returns void
+     */
+    setDescription(description: string): void;
     /**
      * Adds an agent to the chatroom
      * @param agent Agent to be added to the chatroom

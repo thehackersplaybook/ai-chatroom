@@ -1,15 +1,4 @@
 /**
- *
- * @file common.ts
- * @author Aditya Patange (AdiPat) <contact.adityapatange@gmail.com>
- * @description 🚀 Common utility functions.
- * @date December 2024
- * @version 1.0.0
- * @license Affero General Public License v3.0
- * ✨ "Simplicity is the soul of efficiency." – Austin Freeman
- *
- */
-/**
  * Common: Utility class for common functions.
  */
 export declare class Common {
@@ -31,4 +20,29 @@ export declare class Common {
      * @returns boolean if the name is valid
      */
     static isValidName(name: string): boolean;
+    /**
+     * Generates a random name in capital case.
+     * @returns A random name generated.
+     */
+    static generateRandomName(): string;
+    /**
+     * Validates the name and throws an error if it is invalid.
+     * @param name Name of the entity
+     * @param errorMessage Error message to throw
+     * @throws Error if the name is invalid
+     */
+    static validateNameWithError(name: string, errorMessage: string): void;
+    /**
+     * Checks if the value is null or undefined.
+     * @param value Value to check
+     * @returns true if the value is null or undefined
+     */
+    static isNullOrUndefined(value: any): boolean;
+    /**
+     * Generates a random integer between the specified range.
+     * @param min Minimum value of the range
+     * @param max Maximum value of the range
+     * @returns A random integer between the specified range
+     */
+    static generateRandomInteger(min: number, max: number): number;
 }

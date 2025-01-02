@@ -1,6 +1,6 @@
 import { Persona } from "./models";
 
-export const Personas: Persona[] = [
+export const personas: Persona[] = [
   {
     key: "sophia_quantum",
     name: "Sophia Quantum",

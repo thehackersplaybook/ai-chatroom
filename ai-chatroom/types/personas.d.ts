@@ -1,2 +1,2 @@
 import { Persona } from "./models";
-export declare const Personas: Persona[];
+export declare const personas: Persona[];

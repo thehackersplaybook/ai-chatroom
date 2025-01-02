@@ -28,8 +28,9 @@ export interface ChatroomInitOptions {
  * Chatroom where the agents interact
  */
 export class Chatroom {
-  private name: string;
   private id: string;
+  private name: string;
+  private description: string = "";
   private chatDriver: ChatDriver = new ChatDriver();
   private agents: Agents = {};
 
@@ -92,6 +93,23 @@ export class Chatroom {
    */
   public getChatDriver(): ChatDriver {
     return this.chatDriver;
+  }
+
+  /**
+   * Returns the description of the chatroom
+   * @returns {string} The description of the chatroom
+   */
+  public getDescription(): string {
+    return this.description;
+  }
+
+  /**
+   * Sets the description of the chatroom
+   * @param description The description of the chatroom
+   * @returns void
+   */
+  public setDescription(description: string): void {
+    this.description = description;
   }
 
   /**
