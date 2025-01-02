@@ -1,14 +1,22 @@
 /**
- * Filename: chatroom.ts
- * Author: Aditya Patange (AdiPat)
- * Description: Chatroom class for the AI Chatroom tool.
+ *
+ * @file chatroom.ts
+ * @author Aditya Patange (AdiPat) <contact.adityapatange@gmail.com>
+ * @description 🚀 Chatroom where the agents interact
+ * @date December 2024
+ * @version 1.0.0
+ * @license Affero General Public License v3.0
  * ✨ "The only way to do great work is to love what you do." – Steve Jobs
+ *
  */
 import { ChatDriver } from "./chat-driver";
 import { Agent } from "./agent";
 export interface ChatroomInitOptions {
     name: string;
 }
+/**
+ * Chatroom where the agents interact
+ */
 export declare class Chatroom {
     private name;
     private id;

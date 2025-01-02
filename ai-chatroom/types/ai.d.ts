@@ -1,10 +1,13 @@
 /**
+ *
  * @file ai.ts
  * @author Aditya Patange <contact.adityapatange@gmail.com>
- * @description This file contains the AI class which provides methods to generate text and objects using a specified language model.
- * ✨ "The only limit to our realization of tomorrow is our doubts of today." - Franklin D. Roosevelt
+ * @description This is a simple abstraction built on top of Vercel AI SDK Core for convenience.
  * @date December 2024
  * @version 1.0.0
+ * @license Affero General Public License v3.0
+ * ✨ "The only limit to our realization of tomorrow is our doubts of today." - Franklin D. Roosevelt
+ *
  */
 import { generateText, generateObject, LanguageModel, CoreMessage } from "ai";
 import { z } from "zod";
@@ -32,7 +35,7 @@ interface GenerateObjectOptions {
     frequencyPenalty?: number;
 }
 /**
- * AI class provides methods to generate text and objects using a specified language model.
+ * AI: Convenience class for interacting with the AI models.
  */
 export declare class AI {
     private static instance;
@@ -61,6 +64,13 @@ export declare class AI {
      * @throws An error if the model is not found.
      */
     static getModel(modelName: string): Promise<LanguageModel>;
+    /**
+     * Checks the model availability for the provider.
+     * @param provider The LLM provider.
+     * @param model The LLM model.
+     * @returns true if the provider has the model.
+     */
+    private static providerHasModel;
     /**
      * Initializes an instance of the AI class with the specified model.
      * @param modelName The name of the model to instantiate the AI client with.

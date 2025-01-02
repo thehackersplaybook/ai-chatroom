@@ -1,9 +1,13 @@
 /**
+ *
  * @file index.ts
- * @author Aditya Patange <contact.adityapatange@gmail.com>
- * @description 🚀 MIA: Medical Image Analysis
+ * @author Aditya Patange (AdiPat) <contact.adityapatange@gmail.com>
+ * @description 🚀 Entry point for AI Chatroom
  * @date December 2024
  * @version 1.0.0
+ * @license Affero General Public License v3.0
+ * ✨ "No work and all play makes you rich, healthy and wise." – Anonymous
+ *
  */
 
 import dotenv from "dotenv";

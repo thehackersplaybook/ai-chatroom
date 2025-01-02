@@ -1,6 +1,6 @@
 import { ChatMessage } from "./models";
 /**
- * ChatDriver class provides methods to orchestrate the chat messages in the chatroom.
+ * ChatDriver class provides orchestration for chat messages.
  */
 export declare class ChatDriver {
     private messages;
