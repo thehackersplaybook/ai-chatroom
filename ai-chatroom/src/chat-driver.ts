@@ -1,15 +1,20 @@
 /**
- * Filename: chat-driver.ts
- * Author: Aditya Patange (AdiPat)
- * Description: Driver for chat messages in the AI Chatroom tool.
- * ✨ "We don't ask, we enquire." – Anonymous
+ *
+ * @file chat-driver.ts
+ * @author Aditya Patange (AdiPat) <contact.adityapatange@gmail.com>
+ * @description 🚀 ChatDriver The low-level module to handle all chat activities.
+ * @date December 2024
+ * @version 1.0.0
+ * @license Affero General Public License v3.0
+ * ✨ "We win because we choose." — Anonymous
+ *
  */
 import { Subject } from "rxjs";
 import { ChatMessage } from "./models";
 import { v4 as uuid } from "uuid";
 
 /**
- * ChatDriver class provides methods to orchestrate the chat messages in the chatroom.
+ * ChatDriver class provides orchestration for chat messages.
  */
 export class ChatDriver {
   private messages: Subject<ChatMessage> = new Subject();
@@ -19,7 +24,7 @@ export class ChatDriver {
    * Sends a message to the chatroom
    * @param message - The message to send
    */
-  sendMessage(message: ChatMessage): void {
+  public sendMessage(message: ChatMessage): void {
     this.messages.next(message);
     this.history.push(message);
   }
@@ -28,7 +33,7 @@ export class ChatDriver {
    * Returns the chat history
    * @returns ChatMessage[] - The chat history
    */
-  getHistory(): ChatMessage[] {
+  public getHistory(): ChatMessage[] {
     return this.history;
   }
 
