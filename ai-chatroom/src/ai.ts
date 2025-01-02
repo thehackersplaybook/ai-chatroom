@@ -91,7 +91,6 @@ interface GenerateObjectOptions {
  * AI: Convenience class for interacting with the AI models.
  */
 export class AI {
-  private static instance: AI;
   private model: LanguageModel;
 
   /**
