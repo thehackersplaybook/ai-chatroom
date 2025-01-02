@@ -9,7 +9,7 @@
 
 ## Introduction 💡
 
-**AI Chatroom** is your ticket to a vibrant, dynamic, and ever-curious virtual conversation space. This TypeScript-based program spawns AI personas for interactive chat sessions where you set the seed topic, define the participants, and watch the magic unfold! Designed to make experimentation with AI chat systems a breeze, this project is perfect for developers, AI enthusiasts, and curious techies alike. 
+**AI Chatroom** is your ticket to a vibrant, dynamic, and ever-curious virtual conversation space. This TypeScript-based program spawns AI personas for interactive chat sessions where you set the seed topic, define the participants, and watch the magic unfold! Designed to make experimentation with AI chat systems a breeze, this project is perfect for developers, AI enthusiasts, and curious techies alike.
 
 <p align="center" width="100%">
     <img width="100%" src="https://img.freepik.com/premium-photo/futuristic-aipowered-digital-interface-with-abstract-geometric-data-visualization_38013-60481.jpg"> 
@@ -80,6 +80,7 @@ By simulating multi-agent conversations, this project offers a platform to explo
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone <repository-url>
    cd ai-chatroom
@@ -93,6 +94,7 @@ By simulating multi-agent conversations, this project offers a platform to explo
 ### Build and Run
 
 1. Build the project:
+
    ```bash
    npm run build
    ```
@@ -109,11 +111,13 @@ By simulating multi-agent conversations, this project offers a platform to explo
 ### Starting a Chatroom
 
 1. **Provide Input:** When prompted, enter the following details:
+
    - `seed_topic`: Topic to kickstart the conversation (optional).
    - `description`: Use this if no seed topic is provided.
    - `participants`: Number of AI participants to spawn.
 
 2. **Interact:**
+
    - Press `Space` to step through the conversation.
    - Enter `txsq` to initiate termination (10 more messages).
    - Enter `sv file.json` to save the chat history.
@@ -125,13 +129,14 @@ By simulating multi-agent conversations, this project offers a platform to explo
 ## Examples 📊
 
 ### Starting a Chatroom
+
 ```bash
 > npm start
 
 Welcome to the AI-Chatroom! 🌐
 
 Enter seed topic (or leave blank): Artificial Intelligence Ethics
-Enter description (if no seed topic): 
+Enter description (if no seed topic):
 Enter number of participants: 3
 
 Chatroom ID: 1234-5678-9012
@@ -140,19 +145,25 @@ Chatroom ID: 1234-5678-9012
 ```
 
 ### Stepping Through Messages
+
 Press `Space` to see the next message:
+
 ```bash
 [Bot 2]: I believe transparency in algorithms is crucial.
 ```
 
 ### Termination Sequence
+
 Enter `txsq`:
+
 ```bash
 [System]: Termination sequence initiated. Chat will end in 10 messages.
 ```
 
 ### Saving a Chat
+
 Enter `sv chat-history.json`:
+
 ```bash
 [System]: Chat saved to chat-history.json
 ```
@@ -169,9 +180,8 @@ We welcome contributions! Check out our [Contribution Guidelines](#) and join th
 
 ## License 📄
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the AGPL v3. See the [LICENSE](LICENSE) file for details.
 
 ---
 
 > _"I am, because I am conversational!" — Anonymous_ 🎨
-
