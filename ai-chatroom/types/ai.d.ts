@@ -38,13 +38,18 @@ interface GenerateObjectOptions {
  * AI: Convenience class for interacting with the AI models.
  */
 export declare class AI {
-    private static instance;
     private model;
     /**
      * Constructs an instance of the AI class.
      * @param model - The language model to use.
      */
     private constructor();
+    /**
+     * Initializes an instance of the AI class with the specified model.
+     * @param modelName The name of the model to instantiate the AI client with.
+     * @returns AI instance
+     */
+    static getInstance(modelName: string): Promise<AI>;
     /**
      * Generates text using the specified options.
      * @param options - The options for generating text.
@@ -65,6 +70,12 @@ export declare class AI {
      */
     static getModel(modelName: string): Promise<LanguageModel>;
     /**
+     * Extracts the model and provider from the composite model name.
+     * @param modelName The composite model name.
+     * @returns The 'model' and 'provider' extracted from the composite model name.
+     */
+    private static extractModelAndProviderFromModelConfig;
+    /**
      * Checks the model availability for the provider.
      * @param provider The LLM provider.
      * @param model The LLM model.
@@ -72,10 +83,11 @@ export declare class AI {
      */
     private static providerHasModel;
     /**
-     * Initializes an instance of the AI class with the specified model.
-     * @param modelName The name of the model to instantiate the AI client with.
-     * @returns AI instance
+     * Initializes the model by the provider.
+     * @param provider The LLM provider.
+     * @param model The LLM model.
+     * @returns The initialized model.
      */
-    static getInstance(modelName: string): Promise<AI>;
+    private static initializeModelByProvider;
 }
 export {};
