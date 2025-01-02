@@ -18,41 +18,13 @@ export declare class ChatDriver {
      */
     getHistory(): ChatMessage[];
     /**
-     * Builds a chat message object
-     * @param chatroomId The ID of the chatroom
-     * @param message Message content of the chat message
-     * @param sender The sender ID of the chat message
-     * @returns ChatMessage The chat message object
-     */
-    private static buildChatMessage;
-    /**
-     * Builds an agent chat message object
-     * @param chatroomId The ID of the chatroom
-     * @param message The message content of the chat message
-     * @param sender The sender ID of the chat message
-     * @returns The chat message object
-     */
-    static buildAgentChatMessage(chatroomId: string, message: string, sender: string): ChatMessage;
-    /**
-     * Builds a system chat message object
-     * @param chatroomId The ID of the chatroom
-     * @param message The message content of the chat message
-     * @param sender The sender ID of the chat message
-     * @returns The chat message object
-     */
-    static buildSystemChatMessage(chatroomId: string, message: string, sender: string): ChatMessage;
-    /**
-     * Builds a user chat message object
-     * @param chatroomId The ID of the chatroom
-     * @param message The message content of the chat message
-     * @param sender The sender ID of the chat message
-     * @returns The chat message object
-     */
-    static buildUserChatMessage(chatroomId: string, message: string, sender: string): ChatMessage;
-    /**
      * Attaches a handler function to be called when a message is received
      * @param handler Handler function to be called when a message is received
      */
     addOnMessageHandler(handler: (message: ChatMessage) => Promise<void>): void;
+    /**
+     * Terminates the chat and completes the message stream
+     * @returns void
+     */
     terminateChat(): void;
 }

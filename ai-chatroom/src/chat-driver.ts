@@ -10,8 +10,7 @@
  *
  */
 import { Subject } from "rxjs";
-import { ChatMessage, ChatMessageType } from "./models";
-import { v4 as uuid } from "uuid";
+import { ChatMessage } from "./models";
 
 /**
  * ChatDriver class provides orchestration for chat messages.
@@ -44,76 +43,6 @@ export class ChatDriver {
   }
 
   /**
-   * Builds a chat message object
-   * @param chatroomId The ID of the chatroom
-   * @param message Message content of the chat message
-   * @param sender The sender ID of the chat message
-   * @returns ChatMessage The chat message object
-   */
-  private static buildChatMessage(
-    chatroomId: string,
-    message: string,
-    sender: string,
-    isVisible: boolean,
-    type: ChatMessageType
-  ): ChatMessage {
-    return {
-      id: uuid(),
-      chatroomId,
-      sender,
-      message,
-      timestamp: new Date().getTime(),
-      isVisible,
-      type,
-    };
-  }
-
-  /**
-   * Builds an agent chat message object
-   * @param chatroomId The ID of the chatroom
-   * @param message The message content of the chat message
-   * @param sender The sender ID of the chat message
-   * @returns The chat message object
-   */
-  public static buildAgentChatMessage(
-    chatroomId: string,
-    message: string,
-    sender: string
-  ): ChatMessage {
-    return this.buildChatMessage(chatroomId, message, sender, true, "agent");
-  }
-
-  /**
-   * Builds a system chat message object
-   * @param chatroomId The ID of the chatroom
-   * @param message The message content of the chat message
-   * @param sender The sender ID of the chat message
-   * @returns The chat message object
-   */
-  public static buildSystemChatMessage(
-    chatroomId: string,
-    message: string,
-    sender: string
-  ): ChatMessage {
-    return this.buildChatMessage(chatroomId, message, sender, true, "system");
-  }
-
-  /**
-   * Builds a user chat message object
-   * @param chatroomId The ID of the chatroom
-   * @param message The message content of the chat message
-   * @param sender The sender ID of the chat message
-   * @returns The chat message object
-   */
-  public static buildUserChatMessage(
-    chatroomId: string,
-    message: string,
-    sender: string
-  ): ChatMessage {
-    return this.buildChatMessage(chatroomId, message, sender, true, "user");
-  }
-
-  /**
    * Attaches a handler function to be called when a message is received
    * @param handler Handler function to be called when a message is received
    */
@@ -127,6 +56,10 @@ export class ChatDriver {
     this.messages.subscribe(handler);
   }
 
+  /**
+   * Terminates the chat and completes the message stream
+   * @returns void
+   */
   public terminateChat(): void {
     this.isChatTerminated = true;
     this.messages.complete();

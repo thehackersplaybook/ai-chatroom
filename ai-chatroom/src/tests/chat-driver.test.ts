@@ -1,12 +1,13 @@
 import { describe, expect, beforeEach, afterEach, it, vi } from "vitest";
 import { ChatDriver } from "../chat-driver";
 import { ChatMessage } from "../models";
+import { ChatMessageBuilder } from "../chat-message-builder";
 
 describe("Chat Driver", () => {
   let standardChatMessage: ChatMessage;
 
   beforeEach(() => {
-    standardChatMessage = ChatDriver.buildAgentChatMessage(
+    standardChatMessage = ChatMessageBuilder.buildAgentChatMessage(
       "chatroom1",
       "Hello",
       "user1"
@@ -16,62 +17,6 @@ describe("Chat Driver", () => {
 
   afterEach(() => {
     vi.resetAllMocks();
-  });
-
-  describe("build chat message", () => {
-    it("builds an agent chat message object", () => {
-      const expectedChatMessage = {
-        id: expect.any(String),
-        chatroomId: "chatroom1",
-        sender: "user1",
-        message: "Hello",
-        timestamp: new Date().getTime(),
-        isVisible: true,
-        type: "agent",
-      };
-      const chatMessage = ChatDriver.buildAgentChatMessage(
-        "chatroom1",
-        "Hello",
-        "user1"
-      );
-      expect(chatMessage).toEqual(expectedChatMessage);
-    });
-
-    it("builds a system chat message object", () => {
-      const expectedChatMessage = {
-        id: expect.any(String),
-        chatroomId: "chatroom1",
-        sender: "user1",
-        message: "Hello",
-        timestamp: new Date().getTime(),
-        isVisible: true,
-        type: "system",
-      };
-      const chatMessage = ChatDriver.buildSystemChatMessage(
-        "chatroom1",
-        "Hello",
-        "user1"
-      );
-      expect(chatMessage).toEqual(expectedChatMessage);
-    });
-
-    it("builds a user chat message object", () => {
-      const expectedChatMessage = {
-        id: expect.any(String),
-        chatroomId: "chatroom1",
-        sender: "user1",
-        message: "Hello",
-        timestamp: new Date().getTime(),
-        isVisible: true,
-        type: "user",
-      };
-      const chatMessage = ChatDriver.buildUserChatMessage(
-        "chatroom1",
-        "Hello",
-        "user1"
-      );
-      expect(chatMessage).toEqual(expectedChatMessage);
-    });
   });
 
   describe("send message", () => {
@@ -98,7 +43,7 @@ describe("Chat Driver", () => {
     });
 
     it("returns chat history when multiple messages are sent", async () => {
-      const message2 = ChatDriver.buildAgentChatMessage(
+      const message2 = ChatMessageBuilder.buildAgentChatMessage(
         "chatroom1",
         "Hello",
         "user2"
@@ -120,7 +65,7 @@ describe("Chat Driver", () => {
       await driver.sendMessage(standardChatMessage);
       driver.terminateChat();
 
-      const failingMessage = ChatDriver.buildAgentChatMessage(
+      const failingMessage = ChatMessageBuilder.buildAgentChatMessage(
         "chatroom1",
         "Hello",
         "user1"

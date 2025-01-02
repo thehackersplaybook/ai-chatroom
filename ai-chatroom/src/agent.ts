@@ -16,6 +16,7 @@ import { AI } from "./ai";
 import { AgentValidator } from "./agent-validator";
 import { z } from "zod";
 import { ChatDriver } from "./chat-driver";
+import { ChatMessageBuilder } from "./chat-message-builder";
 
 export interface AgentInitOptions {
   name: string;
@@ -115,7 +116,7 @@ export class Agent {
         }),
       });
 
-      const response = ChatDriver.buildAgentChatMessage(
+      const response = ChatMessageBuilder.buildAgentChatMessage(
         message.chatroomId,
         object.message,
         this.id
