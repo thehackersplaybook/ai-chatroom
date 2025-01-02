@@ -1,16 +1,66 @@
 /**
+ *
  * @file ai.ts
  * @author Aditya Patange <contact.adityapatange@gmail.com>
- * @description This file contains the AI class which provides methods to generate text and objects using a specified language model.
- * ✨ "The only limit to our realization of tomorrow is our doubts of today." - Franklin D. Roosevelt
+ * @description This is a simple abstraction built on top of Vercel AI SDK Core for convenience.
  * @date December 2024
  * @version 1.0.0
+ * @license Affero General Public License v3.0
+ * ✨ "The only limit to our realization of tomorrow is our doubts of today." - Franklin D. Roosevelt
+ *
  */
 
 import { anthropic } from "@ai-sdk/anthropic";
 import { openai } from "@ai-sdk/openai";
 import { generateText, generateObject, LanguageModel, CoreMessage } from "ai";
 import { z } from "zod";
+
+const openAIModels = [
+  "o1",
+  "o1-2024-12-17",
+  "o1-mini",
+  "o1-mini-2024-09-12",
+  "o1-preview",
+  "o1-preview-2024-09-12",
+  "gpt-4o",
+  "gpt-4o-2024-05-13",
+  "gpt-4o-2024-08-06",
+  "gpt-4o-2024-11-20",
+  "gpt-4o-audio-preview",
+  "gpt-4o-audio-preview-2024-10-01",
+  "gpt-4o-audio-preview-2024-12-17",
+  "gpt-4o-mini",
+  "gpt-4o-mini-2024-07-18",
+  "gpt-4-turbo",
+  "gpt-4-turbo-2024-04-09",
+  "gpt-4-turbo-preview",
+  "gpt-4-0125-preview",
+  "gpt-4-1106-preview",
+  "gpt-4",
+  "gpt-4-0613",
+  "gpt-3.5-turbo-0125",
+  "gpt-3.5-turbo",
+  "gpt-3.5-turbo-1106",
+];
+
+const anthropicModels = [
+  "claude-3-5-sonnet-latest",
+  "claude-3-5-sonnet-20241022",
+  "claude-3-5-sonnet-20240620",
+  "claude-3-5-haiku-latest",
+  "claude-3-5-haiku-20241022",
+  "claude-3-opus-latest",
+  "claude-3-opus-20240229",
+  "claude-3-sonnet-20240229",
+  "claude-3-haiku-20240307",
+];
+
+const modelsByProvider: {
+  [provider: string]: Array<string>;
+} = {
+  anthropic: anthropicModels,
+  openai: openAIModels,
+};
 
 interface GenerateTextOptions {
   prompt?: string;
@@ -38,10 +88,10 @@ interface GenerateObjectOptions {
 }
 
 /**
- * AI class provides methods to generate text and objects using a specified language model.
+ * AI: Convenience class for interacting with the AI models.
  */
 export class AI {
-  private static instance: AI | null = null;
+  private static instance: AI;
   private model: LanguageModel;
 
   /**
@@ -84,10 +134,12 @@ export class AI {
     try {
       const [provider, model] = modelName.split(":");
 
-      if (provider == "anthropic") {
-        return anthropic(model);
-      } else if (provider == "openai") {
-        return openai(model);
+      if (AI.providerHasModel(provider, model)) {
+        if (provider == "anthropic") {
+          return anthropic(model);
+        } else if (provider == "openai") {
+          return openai(model);
+        }
       }
 
       throw new Error(`AI: provider ${provider} not found`);
@@ -98,15 +150,22 @@ export class AI {
   }
 
   /**
+   * Checks the model availability for the provider.
+   * @param provider The LLM provider.
+   * @param model The LLM model.
+   * @returns true if the provider has the model.
+   */
+  private static providerHasModel(provider: string, model: string): boolean {
+    return Boolean(modelsByProvider?.[provider]?.includes(model));
+  }
+
+  /**
    * Initializes an instance of the AI class with the specified model.
    * @param modelName The name of the model to instantiate the AI client with.
    * @returns AI instance
    */
   public static async getInstance(modelName: string): Promise<AI> {
-    if (!AI.instance) {
-      const model = await AI.getModel(modelName);
-      AI.instance = new AI(model);
-    }
-    return AI.instance;
+    const model = await AI.getModel(modelName);
+    return new AI(model);
   }
 }

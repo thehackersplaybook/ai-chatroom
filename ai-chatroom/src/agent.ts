@@ -1,8 +1,13 @@
 /**
- * Filename: agent.ts
- * Author: Aditya Patange (AdiPat)
- * Description: Agent class for the AI Chatroom tool.
- * ✨ "We win because we choose." — Anonymous
+ *
+ * @file agent.ts
+ * @author Aditya Patange (AdiPat) <contact.adityapatange@gmail.com>
+ * @description 🚀 Agent: The central entity that interacts with the world.
+ * @date December 2024
+ * @version 1.0.0
+ * @license Affero General Public License v3.0
+ * ✨ "Smoother the smoke, better the inspiration. " — Anonymous
+ *
  */
 
 import { v4 as uuid } from "uuid";
@@ -12,14 +17,14 @@ import { AgentValidator } from "./agent-validator";
 import { z } from "zod";
 import { ChatDriver } from "./chat-driver";
 
-interface AgentInitOptions {
+export interface AgentInitOptions {
   name: string;
   persona: Persona;
   model?: string;
 }
 
 /**
- * Agent class for the AI Chatroom tool.
+ * Agent class represents an agent that can interact with the world.
  */
 export class Agent {
   private DEFAULT_AI_MODEL = "openai:gpt-4o";
@@ -34,6 +39,8 @@ export class Agent {
   /**
    * Constructs an instance of the Agent class.
    * @param name name of the agent
+   * @param persona persona of the agent
+   * @param model model to use for AI
    */
   constructor({ name, persona, model }: AgentInitOptions) {
     this.agentValidator.runValidations(name, persona);
@@ -45,20 +52,16 @@ export class Agent {
   }
 
   /**
-   * Initializes the AI model for the agent.
+   * Initializes the AI model and client for the agent.
    */
   private async initAI(): Promise<void> {
-    if (!this.model) {
-      this.model = this.DEFAULT_AI_MODEL;
-    }
-
     if (!this.ai) {
-      this.ai = await AI.getInstance(this.model);
+      this.ai = await AI.getInstance(this.model as string);
     }
   }
 
   /**
-   * Returns the name of the agent.
+   * Gets the name of the agent.
    * @returns The name of the agent.
    */
   public getName(): string {
@@ -66,7 +69,7 @@ export class Agent {
   }
 
   /**
-   * Returns the ID of the agent.
+   * Gets the ID of the agent.
    * @returns The ID of the agent.
    */
   public getId(): string {
@@ -74,7 +77,15 @@ export class Agent {
   }
 
   /**
-   * Returns the persona of the agent.
+   * Gets the model of the agent.
+   * @returns The model of the agent.
+   */
+  public getModel(): string {
+    return this.model as string;
+  }
+
+  /**
+   * Gets the persona of the agent.
    * @returns persona of the agent
    */
   public getPersona(): Persona {
@@ -86,7 +97,7 @@ export class Agent {
   /**
    * Processes the message and generates a response.
    * @param message The message to process
-   * @returns The response to the message
+   * @returns The response to the message or null if the response could not be generated
    */
   public async processMessage(
     message: ChatMessage
