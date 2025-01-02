@@ -115,7 +115,7 @@ export class Agent {
         }),
       });
 
-      const response = ChatDriver.buildChatMessage(
+      const response = ChatDriver.buildAgentChatMessage(
         message.chatroomId,
         object.message,
         this.id

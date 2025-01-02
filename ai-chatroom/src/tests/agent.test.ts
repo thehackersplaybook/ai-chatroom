@@ -19,6 +19,8 @@ describe("agent", () => {
     sender: "user1",
     message: "Hello",
     timestamp: new Date().getTime(),
+    isVisible: true,
+    type: "agent",
   };
 
   beforeEach(() => {

@@ -73,7 +73,7 @@ describe("chatroom", () => {
       const chatroom = new Chatroom({ name: "AI Chatroom" });
       const agent = standardAgent;
       const processMessageSpy = vi.spyOn(agent, "processMessage");
-      const agentReply = ChatDriver.buildChatMessage(
+      const agentReply = ChatDriver.buildAgentChatMessage(
         chatroom.getId(),
         "Hello, how can I help you?",
         agent.getId()
@@ -82,7 +82,7 @@ describe("chatroom", () => {
       const chatDriver = chatroom.getChatDriver();
       const addEventHandlerSpy = vi.spyOn(chatDriver, "addOnMessageHandler");
       await chatroom.addAgent(agent);
-      const message = ChatDriver.buildChatMessage(
+      const message = ChatDriver.buildAgentChatMessage(
         chatroom.getId(),
         "Hello",
         "random_agent_id"
@@ -108,7 +108,7 @@ describe("chatroom", () => {
       const chatDriver = chatroom.getChatDriver();
       const sendMessageSpy = vi.spyOn(chatDriver, "sendMessage");
       await chatroom.addAgent(agent);
-      const message = ChatDriver.buildChatMessage(
+      const message = ChatDriver.buildAgentChatMessage(
         chatroom.getId(),
         "Hello",
         agent.getId()
@@ -122,12 +122,12 @@ describe("chatroom", () => {
       const chatroom = new Chatroom({ name: "AI Chatroom" });
       const agent = standardAgent;
       const processMessageSpy = vi.spyOn(agent, "processMessage");
-      const agentReply = ChatDriver.buildChatMessage(
+      const agentReply = ChatDriver.buildAgentChatMessage(
         chatroom.getId(),
         "Hello, this is the newly added message from the agent",
         agent.getId()
       );
-      const message = ChatDriver.buildChatMessage(
+      const message = ChatDriver.buildAgentChatMessage(
         chatroom.getId(),
         "Hello",
         "random_agent_id"
@@ -151,7 +151,7 @@ describe("chatroom", () => {
       processMessageSpy.mockResolvedValueOnce(null);
       const chatDriver = chatroom.getChatDriver();
       const sendMessageSpy = vi.spyOn(chatDriver, "sendMessage");
-      const message = ChatDriver.buildChatMessage(
+      const message = ChatDriver.buildAgentChatMessage(
         chatroom.getId(),
         "Hello",
         "random_agent_id"

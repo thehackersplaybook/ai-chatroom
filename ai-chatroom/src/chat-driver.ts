@@ -10,7 +10,7 @@
  *
  */
 import { Subject } from "rxjs";
-import { ChatMessage } from "./models";
+import { ChatMessage, ChatMessageType } from "./models";
 import { v4 as uuid } from "uuid";
 
 /**
@@ -50,10 +50,12 @@ export class ChatDriver {
    * @param sender The sender ID of the chat message
    * @returns ChatMessage The chat message object
    */
-  public static buildChatMessage(
+  private static buildChatMessage(
     chatroomId: string,
     message: string,
-    sender: string
+    sender: string,
+    isVisible: boolean,
+    type: ChatMessageType
   ): ChatMessage {
     return {
       id: uuid(),
@@ -61,7 +63,54 @@ export class ChatDriver {
       sender,
       message,
       timestamp: new Date().getTime(),
+      isVisible,
+      type,
     };
+  }
+
+  /**
+   * Builds an agent chat message object
+   * @param chatroomId The ID of the chatroom
+   * @param message The message content of the chat message
+   * @param sender The sender ID of the chat message
+   * @returns The chat message object
+   */
+  public static buildAgentChatMessage(
+    chatroomId: string,
+    message: string,
+    sender: string
+  ): ChatMessage {
+    return this.buildChatMessage(chatroomId, message, sender, true, "agent");
+  }
+
+  /**
+   * Builds a system chat message object
+   * @param chatroomId The ID of the chatroom
+   * @param message The message content of the chat message
+   * @param sender The sender ID of the chat message
+   * @returns The chat message object
+   */
+  public static buildSystemChatMessage(
+    chatroomId: string,
+    message: string,
+    sender: string
+  ): ChatMessage {
+    return this.buildChatMessage(chatroomId, message, sender, true, "system");
+  }
+
+  /**
+   * Builds a user chat message object
+   * @param chatroomId The ID of the chatroom
+   * @param message The message content of the chat message
+   * @param sender The sender ID of the chat message
+   * @returns The chat message object
+   */
+  public static buildUserChatMessage(
+    chatroomId: string,
+    message: string,
+    sender: string
+  ): ChatMessage {
+    return this.buildChatMessage(chatroomId, message, sender, true, "user");
   }
 
   /**
