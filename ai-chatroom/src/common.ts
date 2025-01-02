@@ -1,13 +1,21 @@
 /**
- * Filename: common.ts
- * Author: Aditya Patange
- * Description: Common utility functions for the MIA tool.
+ *
+ * @file common.ts
+ * @author Aditya Patange (AdiPat) <contact.adityapatange@gmail.com>
+ * @description 🚀 Common utility functions.
+ * @date December 2024
+ * @version 1.0.0
+ * @license Affero General Public License v3.0
  * ✨ "Simplicity is the soul of efficiency." – Austin Freeman
+ *
  */
 
+/**
+ * Common: Utility class for common functions.
+ */
 export class Common {
   /**
-   * Checks if the given source string is a valid URL.
+   * Validates if the given source string is a valid URL.
    * @param {string} source - The source string to check.
    * @returns {boolean} True if the source is a valid URL, false otherwise.
    */
