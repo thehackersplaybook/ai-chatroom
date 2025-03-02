@@ -1,5 +1,5 @@
 import { describe, expect, beforeEach, afterEach, it, vi } from "vitest";
-import { Agent } from "../agent";
+import { ChatAgent } from "../chat-agent";
 import { ChatMessage, Persona } from "../models";
 import { AI } from "../ai";
 
@@ -51,7 +51,10 @@ describe("agent", () => {
 
   describe("initialization", () => {
     it("should create a new agent with name, id and persona", () => {
-      const agent = new Agent({ name: standardName, persona: standardPersona });
+      const agent = new ChatAgent({
+        name: standardName,
+        persona: standardPersona,
+      });
       expect(agent.getName()).toBe(standardName);
       expect(agent.getId()).toBeDefined();
       expect(agent.getPersona()).toBeDefined();
@@ -65,9 +68,9 @@ describe("agent", () => {
           name,
         };
         const expectedErrorMessage = "Invalid persona name";
-        expect(() => new Agent({ name: standardName, persona })).toThrowError(
-          expectedErrorMessage
-        );
+        expect(
+          () => new ChatAgent({ name: standardName, persona })
+        ).toThrowError(expectedErrorMessage);
       }
     );
 
@@ -78,7 +81,9 @@ describe("agent", () => {
           ...standardPersona,
           name,
         };
-        expect(() => new Agent({ name: standardName, persona })).not.toThrow();
+        expect(
+          () => new ChatAgent({ name: standardName, persona })
+        ).not.toThrow();
       }
     );
 
@@ -89,7 +94,7 @@ describe("agent", () => {
         ...standardPersona,
         description: descriptionAbove256Chars,
       };
-      expect(() => new Agent({ name: standardName, persona })).toThrowError(
+      expect(() => new ChatAgent({ name: standardName, persona })).toThrowError(
         errorMessage
       );
     });
@@ -99,14 +104,17 @@ describe("agent", () => {
       (name: string) => {
         const errorMessage = "Invalid agent name";
         expect(
-          () => new Agent({ name, persona: standardPersona })
+          () => new ChatAgent({ name, persona: standardPersona })
         ).toThrowError(errorMessage);
       }
     );
 
     it("selects the default model openai:gpt-4o if model is not provided", () => {
       const defaultModel = "openai:gpt-4o";
-      const agent = new Agent({ name: standardName, persona: standardPersona });
+      const agent = new ChatAgent({
+        name: standardName,
+        persona: standardPersona,
+      });
       expect(agent.getModel()).toBe(defaultModel);
     });
   });
@@ -115,7 +123,10 @@ describe("agent", () => {
     it("successfully processes the first chat message", async () => {
       const getInstanceSpy = vi.spyOn(AI, "getInstance");
       getInstanceSpy.mockImplementation(aiGetInstanceMock);
-      const agent = new Agent({ name: standardName, persona: standardPersona });
+      const agent = new ChatAgent({
+        name: standardName,
+        persona: standardPersona,
+      });
 
       const response = await agent.processMessage(standardChatMessage);
 
@@ -129,7 +140,10 @@ describe("agent", () => {
     it("returns null if there's a failure to process chat message by ai service", async () => {
       const getInstanceSpy = vi.spyOn(AI, "getInstance");
       getInstanceSpy.mockImplementation(aiGetInstanceMockWithError);
-      const agent = new Agent({ name: standardName, persona: standardPersona });
+      const agent = new ChatAgent({
+        name: standardName,
+        persona: standardPersona,
+      });
 
       const response = await agent.processMessage(standardChatMessage);
 

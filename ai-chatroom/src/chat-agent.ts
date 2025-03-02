@@ -11,7 +11,7 @@
  */
 
 import { v4 as uuid } from "uuid";
-import { ChatMessage, Persona } from "./models";
+import { Agent, ChatMessage, Persona } from "./models";
 import { AI } from "./ai";
 import { AgentValidator } from "./agent-validator";
 import { z } from "zod";
@@ -27,7 +27,7 @@ export interface AgentInitOptions {
 /**
  * Agent class represents an agent that can interact with the world.
  */
-export class Agent {
+export class ChatAgent implements Agent {
   private DEFAULT_AI_MODEL = "openai:gpt-4o";
 
   private name: string;

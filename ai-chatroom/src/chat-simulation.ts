@@ -9,10 +9,10 @@
  * ✨ "Oh I see, IC." – Oen
  *
  */
-import { Agent } from "./agent";
+import { ChatAgent } from "./chat-agent";
 import { Chatroom, ChatroomInitOptions } from "./chatroom";
 import { Common } from "./common";
-import { Id, Persona } from "./models";
+import { Id, Persona, Agent } from "./models";
 import { personas } from "./personas";
 import { Prompts } from "./prompts";
 import { Simulation, SimulationInitOptions, Simulator } from "./simulation";
@@ -172,7 +172,7 @@ export class ChatSimulation
       return agentsCreated;
     }
 
-    const agent = new Agent({ name: persona.name, persona });
+    const agent = new ChatAgent({ name: persona.name, persona });
     agents.push(agent);
     personasSelected.add(persona.key);
     const totalAgentsCreated = agentsCreated + 1;

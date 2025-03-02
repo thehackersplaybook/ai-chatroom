@@ -13,7 +13,7 @@
 import { v4 as uuid } from "uuid";
 import { Common } from "./common";
 import { ChatDriver } from "./chat-driver";
-import { Agent } from "./agent";
+import { Agent } from "./models";
 import { ChatMessage } from "./models";
 
 type Agents = {
